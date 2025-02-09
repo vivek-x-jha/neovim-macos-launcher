@@ -4,7 +4,7 @@ Provides Apple Automator scripts for launching any text files in NeoVim on MacOS
 
 Currently supports:
 
-- [ ] Wezterm 
+- [x] Wezterm 
 - [x] iTerm
 - [x] Alacritty
 - [ ] Kitty
@@ -27,4 +27,4 @@ Currently supports:
 - [ ] Debug iterm not launching when no windows are open
 - [ ] Refactor terminal script to open in new window like iterm
 - [ ] Create script for Kitty
-- [ ] Debug wezterm not opening
+- [ ] Debug wezterm launcher creating queue of commands that launch only when initial process terminates
