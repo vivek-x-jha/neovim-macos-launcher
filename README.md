@@ -1,30 +1,40 @@
-# Neovim MacOS Launcher
+# Neovim macOS Launcher
 
-Provides Apple Automator scripts for launching any text files in NeoVim on MacOS. By default, NeoVim is not a native application so opening files in it outside a terminal is troublesome. Inspired by this [Stack Overflow thread](https://stackoverflow.com/a/66992249/8018072).
+Provides Apple Automator scripts for opening text files in Neovim on macOS. Because Neovim is not a native macOS application, opening files in it directly from Finder requires a small launcher. Inspired by this [Stack Overflow thread](https://stackoverflow.com/a/66992249/8018072).
 
 Currently supports:
 
-- [x] Wezterm 
+- [x] WezTerm
 - [x] iTerm
 - [x] Alacritty
 - [ ] Kitty
 - [x] Terminal
 
-## Steps
+## WezTerm setup
+
+The WezTerm launcher uses these machine-specific executable paths:
+
+- Neovim: `/Users/mubuntu/.local/share/bob/nvim-bin/nvim`
+- tmux: `/opt/homebrew/bin/tmux`
+- WezTerm: `/opt/homebrew/bin/wezterm-gui`
+
+Update them in `wezterm-launcher.scpt` if your executables are elsewhere.
 
 1. Launch Automator (Finder -> Applications -> Automator)
-1. New Document -> Choose a type for your document: Application
-1. In Actions search for Run AppleScript and drag that to where it says "Drag actions or files here to buid your workflow."
-1. Delete the default example of AppleScript
-1. Copy and Paste the code in the blog (where it says NeoVim.app) to where it previous had the default code
-6. Save the new Automator app as /Applications/Neovim.app
-1. Right-Click a file type you wish to open every time you click on them (e.g. .php file). Select Get Info or do `CMD + i`, it will open informations about that file. Scroll to wher it says Open With and select Other. Then just go to Aplications folder and select your new NeoVim "app".
-1. Do the same to other file types if you wish.
-1. You can now double click on your PHP files (or others if you did the same) and open them in NeoVim. Enjoy!
+2. Create a new document and choose **Application**.
+3. Add the **Run AppleScript** action.
+4. Replace the example AppleScript with the contents of `wezterm-launcher.scpt`.
+5. Save the application as `/Applications/Neovim.app`.
+6. In Finder, select a file, choose **File > Get Info**, and select **Neovim.app** under **Open with**. Use **Change All** if desired.
+
+Each Finder launch opens the requested file or files in a new window in the temporary tmux session named `nvim-launcher`. Repeated launches open immediately even while that session exists. A Neovim window is removed when Neovim exits; tmux removes the session after its last window exits.
+
+## Other terminals
+
+The repository also includes launcher scripts for iTerm, Alacritty, and Terminal. Their setup follows the same Automator application workflow, substituting the corresponding `.scpt` file.
 
 ## Tasks
 
 - [ ] Debug iterm not launching when no windows are open
 - [ ] Refactor terminal script to open in new window like iterm
 - [ ] Create script for Kitty
-- [ ] Debug wezterm launcher creating queue of commands that launch only when initial process terminates
